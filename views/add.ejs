@@ -1,0 +1,30 @@
+<div class="wrapper">
+    <!-- < class="form-signin">       
+     -->  <br>
+      <input type="text" id="name" class="form-control" name="name" placeholder="name" required="" autofocus="" />
+      <br>
+      <input type="number" id="salary" class="form-control" name="salary" placeholder="salary" required=""/>      
+      <br>
+      <button id="add" class="btn btn-lg btn-primary btn-block"  data-dismiss="modal">add</button>   
+    <!-- </form> -->
+  </div>
+  <script>
+        $(document).ready(function(){
+            $("#add").click(function(){
+                $.post("/user/add",
+                  {
+                      name: $("#name").val(),
+                      salary: $("#salary").val()
+                  }).done(function(response){
+                    if(response['success']){
+                      
+                      $('#list').append('<a class="list-group-item pjax col-md-11 col-sm-11 col-lg-11" style="height: 60px;" ><h4 class="list-group-item-heading" id="user_name">'+response.user.name+'</h4><p class="list-group-item-text" >'+ response.user.salary +'</p></a><a class="pull-right col-md-1 col-sm-1 col-lg-1" href="/" onclick="removeById(\''+response.user._id+'\')"><span class="glyphicon glyphicon-remove"></span></a>');  
+                    
+                    } else {
+                      alert(response['message']);
+                    }
+                    
+                  });  
+              });
+        });
+      </script>
